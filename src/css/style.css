@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Futura Light";
+  src: url(../fonts/Futura/FuturaPT-Light.ttf);
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Futura Medium";
+  src: url(../fonts/Futura/FuturaPT-Medium.ttf);
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Futura Bold";
+  src: url(../fonts/Futura/FuturaPT-Bold.ttf);
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url(../fonts/Source_Sans_Pro/SourceSansPro-ExtraLight.ttf);
+  font-style: normal;
+}
+
+#triangle {
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 2rem;
+  border-color: transparent transparent transparent #ffffff;
+  transition: 100ms all ease;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1rem 0 1rem 1.5rem;
+}
+#triangle.paused {
+  border-style: double;
+  border-width: 0px 0 0px 1.5rem;
+  margin: 0;
+}
+#play-button:hover #triangle {
+  border-color: transparent transparent transparent #f6f6f6;
+}

@@ -6,7 +6,8 @@
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
+    "css": "tailwind build src/css/style.css -o public/style.css",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
@@ -15,8 +16,10 @@
   },
   "dependencies": {
     "gatsby": "^2.24.41",
+    "gatsby-plugin-postcss": "^2.3.11",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "tailwindcss": "^1.6.2"
   },
   "devDependencies": {
     "prettier": "2.0.5"
