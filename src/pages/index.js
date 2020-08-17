@@ -10,9 +10,9 @@ export default class Home extends React.Component {
     super(props)
     // Time
 
-    this.workTime = 0.05
-    this.breakTime = 0.05
-    this.longBreakTime = 0.05
+    this.workTime = 25
+    this.breakTime = 5
+    this.longBreakTime = 25
     this.timerTime = this.workTime * 60 * 1000
 
     // Rounds
