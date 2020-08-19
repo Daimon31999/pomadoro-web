@@ -51,9 +51,9 @@
   @apply rounded-full h-20 w-20 flex items-center justify-center bg-white transition-all bg-opacity-25 border-white border-2;
 }
 
-.rounded-button:hover {
+/* .rounded-button:hover {
   @apply bg-opacity-50;
-}
+} */
 
 #app {
   overflow: hidden;
