@@ -1,7 +1,7 @@
 import React from "react"
 
 export default function Timer(props) {
-  let prompt = "Hi"
+  let prompt = ""
   if (!props.finished) {
     prompt = `${props.date.getMinutes()}:${props.date.getSeconds()}`
     // prompt = `${props.date.toString()}`
@@ -18,7 +18,7 @@ export default function Timer(props) {
   }
   return (
     <div
-      className={`text-white text-center mt-10 ${
+      className={`text-white text-center mt-6 md:mt-16 ${
         props.finished ? "text-5xl md:text-7xl font-futura-med" : "text-8xl "
       }`}
     >

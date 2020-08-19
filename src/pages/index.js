@@ -129,6 +129,7 @@ export default function Home() {
 
   return (
     <div
+      id="app"
       className={
         session === "work"
           ? "h-screen bg-red-600"

@@ -54,3 +54,7 @@
 .rounded-button:hover {
   @apply bg-opacity-50;
 }
+
+#app {
+  flex: 1 0 auto;
+}
