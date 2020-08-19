@@ -10,7 +10,7 @@ import {
 export default function Play(props) {
   return (
     <div className="text-white uppercase text-xl flex text-center justify-center">
-      <div className="mt-8 md:mt-20 flex flex-row justify-around w-full">
+      <div className="mt-4 sm:mt-48  md:mt-20 flex flex-row justify-around w-full">
         {/* < */}
         <div
           ref={props.backwardRef}
