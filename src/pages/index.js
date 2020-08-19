@@ -108,7 +108,10 @@ export default function Home() {
     if (event.code === "Space") {
       setPaused(prev => !prev)
     } else if (event.code === "Enter") {
+      setPaused(true)
       setSkip(prev => !prev)
+      setPaused(false)
+
       // setTimeLeft(prev => new Date(prev + 1000))
     } else if (event.code === "ArrowRight") {
       // setTimeLeft(prev => new Date(prev + 1000))
@@ -138,7 +141,13 @@ export default function Home() {
           : "h-screen bg-longBreak"
       }
     >
-      <Header skip={() => setSkip(true)} />
+      <Header
+        skip={() => {
+          setPaused(true)
+          setSkip(prev => !prev)
+          setPaused(false)
+        }}
+      />
       <div className="md:m-30 sm:m-10 ">
         <Timer date={timeLeft} finished={finished} />
       </div>
