@@ -1,6 +1,27 @@
 module.exports = {
   purge: [],
   theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      // => @media (min-width: 640px) { ... }
+      "sm-phone": "375px",
+      "lg-phone": "400px",
+    },
+    inset: {
+      "0": 0,
+      "32": "8rem",
+      "34": "9rem",
+      "36": "10rem",
+      "38": "11rem",
+      "40": "12rem",
+      "42": "13rem",
+      "44": "14rem",
+      "46": "15rem",
+      "48": "16rem",
+    },
     backgroundColor: theme => ({
       ...theme("colors"),
       longBreak: "#191c18",

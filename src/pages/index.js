@@ -141,13 +141,13 @@ export default function Home() {
       <Header skip={() => setSkip(true)} />
       <div className="md:m-30 sm:m-10 ">
         <Timer date={timeLeft} finished={finished} />
-        <Play
-          playPause={playPause}
-          backwardRef={backwardRef}
-          forwardRef={forwardRef}
-          paused={pause}
-        />
       </div>
+      <Play
+        playPause={playPause}
+        backwardRef={backwardRef}
+        forwardRef={forwardRef}
+        paused={pause}
+      />
       <Footer round={round} />
     </div>
   )

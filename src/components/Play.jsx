@@ -9,8 +9,8 @@ import {
 
 export default function Play(props) {
   return (
-    <div className="text-white uppercase text-xl flex text-center justify-center">
-      <div className="mt-4 sm:mt-12 md:mt-20 flex flex-row justify-around w-full">
+    <div className="text-white uppercase text-xl flex flex-column text-center justify-center fixed bottom-32 lg-phone:bottom-40 md:bottom-42 w-full">
+      <div className=" flex flex-row justify-around w-full">
         {/* < */}
         <div
           ref={props.backwardRef}
