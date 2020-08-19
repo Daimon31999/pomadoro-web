@@ -15,13 +15,18 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "gatsby": "^2.24.41",
     "gatsby-plugin-postcss": "^2.3.11",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "tailwindcss": "^1.6.2"
+    "tailwindcss": "^1.6.2",
+    "use-sound": "^1.0.2"
   },
   "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.1.0",
     "prettier": "2.0.5"
   },
   "repository": {
@@ -30,5 +35,12 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

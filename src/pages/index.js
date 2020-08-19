@@ -1,177 +1,153 @@
-import React from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import "./../css/style.css"
 import Header from "./../components/Header"
 import Timer from "./../components/Timer"
 import Footer from "./../components/Footer"
 import Play from "./../components/Play"
+import useSound from "use-sound"
+import tickSound from "./../sounds/tick-work.mp3"
 
-export default class Home extends React.Component {
-  constructor(props) {
-    super(props)
-    // Time
+export default function Home() {
+  // Vars
+  const workTime = 25 * 60 * 1000
+  const breakTime = 5 * 60 * 1000
+  const longBreakTime = 25 * 60 * 1000
 
-    this.workTime = 25
-    this.breakTime = 5
-    this.longBreakTime = 25
-    this.timerTime = this.workTime * 60 * 1000
+  // Hooks
+  const [pause, setPaused] = useState(false)
+  const [skip, setSkip] = useState(false)
+  const [finished, setFinished] = useState(0)
 
-    // Rounds
-    this.roundsCount = 12
+  const [timeLeft, setTimeLeft] = useState(new Date(workTime))
+  const [round, setRound] = useState(0)
+  const [intervalId, setIntervalId] = useState(0)
+  const [tmpIntervalId] = useState(0)
+  const [session, setSession] = useState("work")
+  const [play] = useSound(tickSound)
 
-    this.state = {
-      timePassed: 0, // in milliseconds
-      session: "work", // work \ break \ long break
-      date: new Date(this.timerTime),
-      round: 0,
-      paused: false,
-      skip: false,
+  // Refs
+  let backwardRef = React.createRef()
+  let forwardRef = React.createRef()
+
+  // pomadoro
+  useEffect(() => {
+    if (round < 12) {
+      // Exit when time = 0
+      if (timeLeft.getTime() < 0 || skip) {
+        play()
+        setSkip(false)
+        if (session === "work") {
+          setRound(round + 1)
+
+          setSession(
+            round !== 0 && (round + 1) % 4 === 0 ? "long break" : "break"
+          )
+          setTimeLeft(
+            new Date(
+              round !== 0 && (round + 1) % 4 === 0 ? longBreakTime : breakTime
+            )
+          )
+        } else {
+          setSession("work")
+          setTimeLeft(new Date(workTime))
+        }
+        return
+      }
+
+      clearInterval(intervalId)
+
+      setIntervalId(
+        setInterval(() => {
+          if (!pause) setTimeLeft(new Date(timeLeft.getTime() - 1000))
+        }, 1000)
+      )
+    } else {
+      setFinished(true)
+      setPaused(true)
     }
 
-    // Эта привязка обязательна для работы `this` в колбэке.
-    this.tick = this.tick.bind(this)
-    this.pomadoro = this.pomadoro.bind(this)
-    this.playPause = this.playPause.bind(this)
-    this.skip = this.skip.bind(this)
-  }
+    return () => clearInterval(intervalId)
+  }, [round, session, timeLeft, pause])
 
-  componentDidMount() {
-    this.pomadoro()
-  }
+  // backward forward buttons onclick
+  useEffect(() => {
+    const back = backwardRef.current
+    const next = forwardRef.current
+    let interval
 
-  componentWillUnmount() {
-    clearInterval(this.timerID)
-  }
-
-  async pomadoro() {
-    while (this.state.round < 12) {
-      console.log("$$$$$$$$$$$$$$$$$$$$$   work   $$$$$$$$$$$$$$$$$$$$$$$")
-
-      this.timerID = await this.tick("work")
-
-      this.setState({
-        round: this.state.round + 1,
-      })
-
-      // long break
-      if (this.state.round !== 0 && this.state.round % 4 === 0) {
-        console.log(
-          "$$$$$$$$$$$$$$$$$$$$$   long break   $$$$$$$$$$$$$$$$$$$$$$$"
+    next.onclick = function () {
+      setTimeLeft(new Date(timeLeft.getTime() + 60000))
+    }
+    back.onclick = function () {
+      setTimeLeft(
+        new Date(
+          timeLeft.getTime() - 60000 >= 0
+            ? timeLeft.getTime() - 60000
+            : timeLeft.getTime()
         )
+      )
+    }
 
-        this.timerID = await this.tick("long break")
-      }
-      // break
-      else if (this.state.round !== 0) {
-        console.log("$$$$$$$$$$$$$$$$$$$$$   break   $$$$$$$$$$$$$$$$$$$$$$$")
+    return () => {
+      clearInterval(tmpIntervalId)
+      clearInterval(interval)
+    }
+  }, [timeLeft, pause, tmpIntervalId])
 
-        this.timerID = await this.tick("break")
-      }
-      if (this.state.round === 12) {
-        this.setState({
-          finished: true,
-        })
-        console.log("fininshed !!")
-      }
+  const playPause = paused => {
+    if (paused === true) {
+      setPaused(true)
+    } else if (paused === false) {
+      setPaused(false)
+    } else {
+      setPaused(!pause)
     }
   }
 
-  tick(name) {
-    return new Promise(resolve => {
-      switch (name) {
-        case "work":
-          this.timerTime = this.workTime * 60 * 1000
-          break
+  const handleKeyDown = useCallback(event => {
+    if (event.code === "Space") {
+      setPaused(prev => !prev)
+    } else if (event.code === "Enter") {
+      setSkip(prev => !prev)
+      // setTimeLeft(prev => new Date(prev + 1000))
+    } else if (event.code === "ArrowRight") {
+      // setTimeLeft(prev => new Date(prev + 1000))
+    } else if (event.code === "ArrowLeft") {
+      backwardRef.current && backwardRef.current.click()
+      setTimeLeft(prev => new Date(prev - 60000))
+    }
+  })
 
-        case "break":
-          this.timerTime = this.breakTime * 60 * 1000
-          break
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown)
 
-        case "long break":
-          this.timerTime = this.longBreakTime * 60 * 1000
-          break
-        default:
-          throw new Error()
+    // cleanup this component
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [])
+
+  return (
+    <div
+      className={
+        session === "work"
+          ? "h-screen bg-red-600"
+          : session === "break"
+          ? "h-screen bg-blue-600"
+          : "h-screen bg-longBreak"
       }
-
-      this.setState({
-        date: new Date(this.timerTime),
-      })
-
-      this.setState({
-        session: `${name}`,
-      })
-
-      this.timerID = setInterval(() => {
-        if (!this.state.paused) {
-          console.log("timePassed", this.state.timePassed)
-          console.log("date", this.state.date.getSeconds())
-          console.log("round", this.state.round)
-          console.log("session", this.state.session)
-          console.log("finished", this.state.finished)
-
-          // updates timer
-          this.setState({
-            timePassed: this.state.timePassed + 1000, // in milliseconds
-            date: new Date(this.state.date.getTime() - 1000),
-          })
-
-          if (this.state.paused === true) {
-            clearInterval(this.timerID)
-          }
-
-          // Time is 0 stop timer
-          if (this.state.date.getTime() < 0 || this.state.skip === true) {
-            clearInterval(this.timerID)
-            resolve(1)
-            console.log("interval cleared+++++++++")
-            this.setState({
-              timePassed: 0,
-              skip: false,
-            })
-          }
-        }
-      }, 1000)
-    })
-  }
-
-  playPause() {
-    this.setState({
-      paused: !this.state.paused,
-    })
-
-    console.log("paused ", this.state.paused)
-  }
-
-  skip() {
-    this.setState({
-      skip: true,
-    })
-    console.log("skip *********************", this.state.skip)
-  }
-
-  render() {
-    return (
-      <div
-        className={
-          this.state.session === "work"
-            ? "h-screen bg-red-600"
-            : this.state.session === "break"
-            ? "h-screen bg-blue-600"
-            : "h-screen bg-longBreak"
-        }
-      >
-        <Header skip={this.skip} />
-        <div className="md:m-30 sm:m-10 ">
-          <Timer date={this.state.date} finished={this.state.finished} />
-          <Play
-            playPause={this.playPause}
-            paused={this.state.paused ? "" : "paused"}
-          />
-        </div>
-        <Footer round={this.state.round} />
+    >
+      <Header skip={() => setSkip(true)} />
+      <div className="md:m-30 sm:m-10 ">
+        <Timer date={timeLeft} finished={finished} />
+        <Play
+          playPause={playPause}
+          backwardRef={backwardRef}
+          forwardRef={forwardRef}
+          paused={pause}
+        />
       </div>
-    )
-  }
+      <Footer round={round} />
+    </div>
+  )
 }
-
-// # TODO Skip
