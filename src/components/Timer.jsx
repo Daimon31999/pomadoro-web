@@ -20,7 +20,7 @@ export default function Timer(props) {
     <div
       ref={props.timerRef}
       id="timer"
-      className={`text-white text-center md:mt-16 ${
+      className={`text-white text-center xl:mt-16 ${
         props.finished
           ? "text-5xl md:text-7xl font-futura-med"
           : "text-8xl md:text-11xl lg:text-9xl "

@@ -170,7 +170,7 @@ export default function Home() {
         <title>Pomadoro Lite🍅</title>
       </Helmet>
       <Header skipRef={skipRef} />
-      <div className="md:m-30 sm:m-10 ">
+      <div id="timer-wrapper" className="lg:m-30">
         <Timer timerRef={timerRef} date={timeLeft} finished={finished} />
       </div>
       <Play
