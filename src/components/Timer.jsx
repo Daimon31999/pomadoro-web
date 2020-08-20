@@ -19,15 +19,12 @@ export default function Timer(props) {
   return (
     <div
       className={`text-white text-center mt-6 md:mt-16 ${
-        props.finished ? "text-5xl md:text-7xl font-futura-med" : "text-8xl "
+        props.finished
+          ? "text-5xl md:text-7xl font-futura-med"
+          : "text-8xl md:text-11xl lg:text-9xl "
       }`}
     >
-      <p className="uppercase" dangerouslySetInnerHTML={{ __html: prompt }}>
-        {/* {props.finished
-          ? "Finished!"
-          : `${props.date.getMinutes()}:${props.date.getSeconds()}`} */}
-        {/* {prompt} */}
-      </p>
+      <p className="uppercase" dangerouslySetInnerHTML={{ __html: prompt }}></p>
     </div>
   )
 }

@@ -162,16 +162,8 @@ export default function Home() {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Pomadoro Lite🍅</title>
-        <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
-      <Header
-        skipRef={skipRef}
-        // skip={() => {
-        //   setPaused(true)
-        //   setSkip(prev => !prev)
-        //   setPaused(false)
-        // }}
-      />
+      <Header skipRef={skipRef} />
       <div className="md:m-30 sm:m-10 ">
         <Timer date={timeLeft} finished={finished} />
       </div>
