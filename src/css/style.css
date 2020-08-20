@@ -57,7 +57,7 @@
 }
 
 /* For landscape Iphone*/
-@media screen and (orientation: landscape) and (max-width: 768px) {
+@media screen and (orientation: landscape) and (max-width: 1280px) {
   #play {
     position: fixed;
     bottom: 4rem;
