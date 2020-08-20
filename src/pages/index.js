@@ -137,17 +137,6 @@ export default function Home() {
     }
   }, [])
 
-  useEffect(() => {
-    window.addEventListener(
-      "touchmove",
-      ev => {
-        ev.preventDefault()
-        ev.stopImmediatePropagation()
-      },
-      { passive: false }
-    )
-  })
-
   return (
     <div
       id="app"
