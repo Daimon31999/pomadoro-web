@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { Helmet } from "react-helmet"
+import { disableBodyScroll } from "body-scroll-lock"
 
 import "./../css/style.css"
 import Header from "./../components/Header"
@@ -35,6 +36,10 @@ export default function Home() {
   let playRef = React.createRef()
   let timerRef = React.createRef()
 
+  // disable scroll
+  useEffect(() => {
+    disableBodyScroll(document)
+  })
   // pomadoro
   useEffect(() => {
     if (round < 12) {
