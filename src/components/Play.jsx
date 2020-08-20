@@ -24,6 +24,7 @@ export default function Play(props) {
         {/* Play */}
         <div
           id="play-button"
+          ref={props.playRef}
           className="rounded-button lg:hover:bg-opacity-50 md:w-24 md:h-24"
           onClick={props.playPause}
         >

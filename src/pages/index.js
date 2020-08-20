@@ -32,6 +32,8 @@ export default function Home() {
   let backwardRef = React.createRef()
   let forwardRef = React.createRef()
   let skipRef = React.createRef()
+  let playRef = React.createRef()
+  let timerRef = React.createRef()
 
   // pomadoro
   useEffect(() => {
@@ -78,8 +80,16 @@ export default function Home() {
     const back = backwardRef.current
     const next = forwardRef.current
     const skip = skipRef.current
+    const play = playRef.current
+    const timer = timerRef.current
     let interval
 
+    timer.onclick = function () {
+      setPaused(prev => !prev)
+    }
+    play.onclick = function () {
+      setPaused(prev => !prev)
+    }
     skip.onclick = function () {
       setPaused(true)
       setSkip(prev => !prev)
@@ -137,6 +147,8 @@ export default function Home() {
     }
   }, [])
 
+  useEffect(() => {})
+
   return (
     <div
       id="app"
@@ -154,10 +166,10 @@ export default function Home() {
       </Helmet>
       <Header skipRef={skipRef} />
       <div className="md:m-30 sm:m-10 ">
-        <Timer date={timeLeft} finished={finished} />
+        <Timer timerRef={timerRef} date={timeLeft} finished={finished} />
       </div>
       <Play
-        playPause={playPause}
+        playRef={playRef}
         backwardRef={backwardRef}
         forwardRef={forwardRef}
         paused={pause}
