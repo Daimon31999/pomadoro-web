@@ -51,11 +51,35 @@
   @apply rounded-full h-20 w-20 flex items-center justify-center bg-white transition-all bg-opacity-25 border-white border-2;
 }
 
-/* .rounded-button:hover {
-  @apply bg-opacity-50;
-} */
-
 #app {
   overflow: hidden;
   flex: 1 0 auto;
+}
+
+/* For landscape Iphone*/
+@media screen and (orientation: landscape) and (max-width: 768px) {
+  #play {
+    position: fixed;
+    bottom: 4rem;
+  }
+  #footer {
+    height: 3rem;
+  }
+
+  .round-container {
+    display: flex;
+    align-items: center;
+  }
+  .round {
+    margin-left: 1rem;
+  }
+  #timer {
+    font-size: 4rem;
+  }
+  #backwardButton,
+  #play-button,
+  #forwardButton {
+    height: 4rem;
+    width: 4rem;
+  }
 }
