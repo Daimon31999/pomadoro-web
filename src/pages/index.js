@@ -31,6 +31,7 @@ export default function Home() {
   // Refs
   let backwardRef = React.createRef()
   let forwardRef = React.createRef()
+  let skipRef = React.createRef()
 
   // pomadoro
   useEffect(() => {
@@ -76,8 +77,14 @@ export default function Home() {
   useEffect(() => {
     const back = backwardRef.current
     const next = forwardRef.current
+    const skip = skipRef.current
     let interval
 
+    skip.onclick = function () {
+      setPaused(true)
+      setSkip(prev => !prev)
+      setPaused(false)
+    }
     next.onclick = function () {
       setTimeLeft(new Date(timeLeft.getTime() + 60000))
     }
@@ -114,10 +121,7 @@ export default function Home() {
       setPaused(true)
       setSkip(prev => !prev)
       setPaused(false)
-
-      // setTimeLeft(prev => new Date(prev + 1000))
     } else if (event.code === "ArrowRight") {
-      // setTimeLeft(prev => new Date(prev + 1000))
     } else if (event.code === "ArrowLeft") {
       backwardRef.current && backwardRef.current.click()
       setTimeLeft(prev => new Date(prev - 60000))
@@ -150,11 +154,12 @@ export default function Home() {
         <link rel="canonical" href="http://mysite.com/example" />
       </Helmet>
       <Header
-        skip={() => {
-          setPaused(true)
-          setSkip(prev => !prev)
-          setPaused(false)
-        }}
+        skipRef={skipRef}
+        // skip={() => {
+        //   setPaused(true)
+        //   setSkip(prev => !prev)
+        //   setPaused(false)
+        // }}
       />
       <div className="md:m-30 sm:m-10 ">
         <Timer date={timeLeft} finished={finished} />
