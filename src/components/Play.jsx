@@ -15,7 +15,7 @@ export default function Play(props) {
         <div
           ref={props.backwardRef}
           id="backwardButton"
-          className="rounded-button md:hover:bg-opacity-50 md:w-24 md:h-24"
+          className="rounded-button lg:hover:bg-opacity-50 md:w-24 md:h-24"
         >
           <div className="text-3xl md:text-4xl">
             <FontAwesomeIcon icon={faBackward} />
@@ -24,7 +24,7 @@ export default function Play(props) {
         {/* Play */}
         <div
           id="play-button"
-          className="rounded-button md:hover:bg-opacity-50 md:w-24 md:h-24"
+          className="rounded-button lg:hover:bg-opacity-50 md:w-24 md:h-24"
           onClick={props.playPause}
         >
           <div
@@ -38,7 +38,7 @@ export default function Play(props) {
         <div
           ref={props.forwardRef}
           id="forwardButton"
-          className="rounded-button md:hover:bg-opacity-50 md:w-24 md:h-24"
+          className="rounded-button lg:hover:bg-opacity-50 md:w-24 md:h-24"
         >
           <div className="text-3xl md:text-4xl ml-1">
             <FontAwesomeIcon icon={faForward} />
