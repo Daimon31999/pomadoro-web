@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react"
+import { Helmet } from "react-helmet"
+
 import "./../css/style.css"
 import Header from "./../components/Header"
 import Timer from "./../components/Timer"
 import Footer from "./../components/Footer"
+
 import Play from "./../components/Play"
 import useSound from "use-sound"
 import tickSound from "./../sounds/tick-work.mp3"
@@ -141,6 +144,11 @@ export default function Home() {
           : "h-screen bg-longBreak"
       }
     >
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Pomadoro Lite🍅</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Header
         skip={() => {
           setPaused(true)
