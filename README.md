@@ -6,7 +6,7 @@
 <h1 align="center">Pomodoro🍅</h1>
 
 <div align="middle">
-<img src="https://media.giphy.com/media/RLzHobmk1IqYtowaBw/giphy.gif" >
+<img src="https://media.giphy.com/media/mG8QKzdxlc7Y2vhKOZ/giphy.gif" >  
 </div>
 
 
