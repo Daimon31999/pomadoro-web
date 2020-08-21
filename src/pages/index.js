@@ -214,7 +214,7 @@ export default function Home() {
     >
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Pomadoro Lite🍅</title>
+        <title>Pomadoro 🍅</title>
       </Helmet>
       <Header skipRef={skipRef} />
       <div id="timer-wrapper" className="lg:m-30">
