@@ -22,7 +22,7 @@ export default function Timer(props) {
       id="timer"
       className={`text-white text-center xl:mt-16 ${
         props.finished
-          ? "text-5xl md:text-7xl font-futura-med"
+          ? "text-5xl sm:mt-10 md:text-7xl font-futura-med"
           : "text-8xl md:text-11xl lg:text-9xl "
       }`}
     >

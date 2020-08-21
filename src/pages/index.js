@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { Helmet } from "react-helmet"
 import { disableBodyScroll } from "body-scroll-lock"
+import store from "store-js"
 
 import "./../css/style.css"
 import Header from "./../components/Header"
@@ -16,17 +17,39 @@ export default function Home() {
   const workTime = 25 * 60 * 1000
   const breakTime = 5 * 60 * 1000
   const longBreakTime = 25 * 60 * 1000
+  // useEffect(() => {
+  //   store.set("date", "7/18")
+  //   if (store.get("date")) {
+  //     let [oldMonth, oldDate] = store.get("date").split("/")
+  //     oldDate = parseInt(oldDate)
+  //     oldMonth = parseInt(oldMonth)
+  //     if (oldDate < new Date().getDate() || oldMonth < new Date().getMonth()) {
+  //       store.remove("time")
+  //       store.remove("round")
+  //       store.remove("session")
+  //       store.remove("date")
+
+  //       if (finished) store.clearAll()
+  //     }
+  //   }
+  // }, [])
 
   // Hooks
   const [pause, setPaused] = useState(false)
   const [skip, setSkip] = useState(false)
   const [finished, setFinished] = useState(0)
 
-  const [timeLeft, setTimeLeft] = useState(new Date(workTime))
-  const [round, setRound] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(
+    store.get("time") ? new Date(store.get("time")) : new Date(workTime)
+  )
+  const [round, setRound] = useState(
+    store.get("round") ? store.get("round") : 0
+  )
   const [intervalId, setIntervalId] = useState(0)
   const [tmpIntervalId] = useState(0)
-  const [session, setSession] = useState("work")
+  const [session, setSession] = useState(
+    store.get("session") ? store.get("session") : "work"
+  )
   const [play] = useSound(tickSound)
 
   // Refs
@@ -35,6 +58,30 @@ export default function Home() {
   let skipRef = React.createRef()
   let playRef = React.createRef()
   let timerRef = React.createRef()
+
+  // reset on next day
+
+  // Store
+  useEffect(() => {
+    store.set("time", timeLeft.getTime())
+    store.set("round", round)
+    store.set("session", session)
+
+    if (finished) store.clearAll()
+
+    if (store.get("date")) {
+      let [oldMonth, oldDate] = store.get("date").split("/")
+      oldDate = parseInt(oldDate)
+      oldMonth = parseInt(oldMonth)
+
+      if (oldDate < new Date().getDate() || oldMonth < new Date().getMonth()) {
+        store.clearAll()
+        store.set("date", `${new Date().getMonth()}/${new Date().getDate()}`)
+      }
+    } else {
+      store.set("date", `${new Date().getMonth()}/${new Date().getDate()}`)
+    }
+  }, [timeLeft, round, session, finished])
 
   // disable scroll
   useEffect(() => {
