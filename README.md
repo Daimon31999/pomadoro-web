@@ -8,20 +8,22 @@
 <h1 align="center">Pomodoro🍅</h1>
 
 <div align="middle">
-<img src="https://media.giphy.com/media/mG8QKzdxlc7Y2vhKOZ/giphy.gif" >  
+<img src="https://media.giphy.com/media/UQmz1z5kadY6jQcAcr/giphy.gif" >  
 </div>
-
 
 Helps you **achieve your own goals** and makes you **motivated** by enhance **productivity**.
 
 # Features
-* adaptive design (mobile, tablet, desktop)
-* works on reload
-* keyboard shortcuts
-* tick sound
-* easter eggs
+
+- adaptive design (mobile, tablet, desktop)
+- works on reload
+- keyboard shortcuts
+- tick sound
+- easter eggs
 
 ## Keyboard ShortCuts on Desktop
-* Enter - skip session
-* Space - pause session
-* Left arrow - rewind
+
+- Enter - skip session
+- Ctrl + Enter - reset session
+- Space - pause session
+- Left arrow - rewind

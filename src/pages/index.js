@@ -17,22 +17,6 @@ export default function Home() {
   const workTime = 25 * 60 * 1000
   const breakTime = 5 * 60 * 1000
   const longBreakTime = 25 * 60 * 1000
-  // useEffect(() => {
-  //   store.set("date", "7/18")
-  //   if (store.get("date")) {
-  //     let [oldMonth, oldDate] = store.get("date").split("/")
-  //     oldDate = parseInt(oldDate)
-  //     oldMonth = parseInt(oldMonth)
-  //     if (oldDate < new Date().getDate() || oldMonth < new Date().getMonth()) {
-  //       store.remove("time")
-  //       store.remove("round")
-  //       store.remove("session")
-  //       store.remove("date")
-
-  //       if (finished) store.clearAll()
-  //     }
-  //   }
-  // }, [])
 
   // Hooks
   const [pause, setPaused] = useState(false)
@@ -56,10 +40,9 @@ export default function Home() {
   let backwardRef = React.createRef()
   let forwardRef = React.createRef()
   let skipRef = React.createRef()
+  let resetRef = React.createRef()
   let playRef = React.createRef()
   let timerRef = React.createRef()
-
-  // reset on next day
 
   // Store
   useEffect(() => {
@@ -69,6 +52,7 @@ export default function Home() {
 
     if (finished) store.clearAll()
 
+    // reset on next day
     if (store.get("date")) {
       let [oldMonth, oldDate] = store.get("date").split("/")
       oldDate = parseInt(oldDate)
@@ -87,7 +71,7 @@ export default function Home() {
   useEffect(() => {
     disableBodyScroll(document)
   })
-  // pomadoro
+  // start pomadoro
   useEffect(() => {
     if (round < 12) {
       // Exit when time = 0
@@ -127,11 +111,12 @@ export default function Home() {
     return () => clearInterval(intervalId)
   }, [round, session, timeLeft, pause])
 
-  // backward forward buttons onclick
+  // backward, forward, skip, reset onclick
   useEffect(() => {
     const back = backwardRef.current
     const next = forwardRef.current
     const skip = skipRef.current
+    const reset = resetRef.current
     const play = playRef.current
     const timer = timerRef.current
     let interval
@@ -145,6 +130,13 @@ export default function Home() {
     skip.onclick = function () {
       setPaused(true)
       setSkip(prev => !prev)
+      setPaused(false)
+    }
+    reset.onclick = function () {
+      setRound(0)
+      setTimeLeft(new Date(workTime))
+      setSession("work")
+      setFinished(false)
       setPaused(false)
     }
     next.onclick = function () {
@@ -177,9 +169,19 @@ export default function Home() {
   }
 
   const handleKeyDown = useCallback(event => {
+    // pause ---> Space
     if (event.code === "Space") {
       setPaused(prev => !prev)
-    } else if (event.code === "Enter") {
+    } //reset ---> Ctrl + Enter
+    else if (event.ctrlKey && event.code === "Enter") {
+      setRound(0)
+      setTimeLeft(new Date(workTime))
+      setSession("work")
+      setFinished(false)
+      setPaused(false)
+    }
+    // skip ---> Enter
+    else if (event.code === "Enter") {
       setPaused(true)
       setSkip(prev => !prev)
       setPaused(false)
@@ -216,7 +218,7 @@ export default function Home() {
         <meta charSet="utf-8" />
         <title>Pomadoro 🍅</title>
       </Helmet>
-      <Header skipRef={skipRef} />
+      <Header skipRef={skipRef} resetRef={resetRef} />
       <div id="timer-wrapper" className="lg:m-30">
         <Timer timerRef={timerRef} date={timeLeft} finished={finished} />
       </div>
