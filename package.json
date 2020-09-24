@@ -20,6 +20,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "body-scroll-lock": "^3.0.3",
     "gatsby": "^2.24.41",
+    "gatsby-plugin-minify-html": "^1.0.4",
     "gatsby-plugin-postcss": "^2.3.11",
     "gatsby-plugin-react-helmet": "^3.3.10",
     "react": "^16.12.0",
