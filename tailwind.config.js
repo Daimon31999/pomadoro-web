@@ -1,7 +1,8 @@
 module.exports = {
   purge: {
     enabled: true,
-    content: ['./src/**/*.jsx'],
+    content: ['./src/components/*.jsx', './src/pages/*'],
+
   },
   theme: {
     screens: {
