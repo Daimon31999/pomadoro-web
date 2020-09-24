@@ -1,5 +1,8 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: true,
+    content: ['./src/**/*.jsx'],
+  },
   theme: {
     screens: {
       sm: "640px",
